@@ -1,0 +1,103 @@
+/* styles.css */
+
+/* Estilos generales */
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Estilos de la barra de navegación */
+nav {
+  background-color: #E5CE37;
+  color: white;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  /* Añade espacio entre el logo y el menú hamburguesa */
+  border-bottom: 20px solid black;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  justify-content: space-around;
+  align-items: center;
+}
+
+nav li {
+  font-size: 24px;
+  font-weight: normal;
+}
+
+nav a {
+  text-decoration: none;
+  color: black;
+  font-weight: normal;
+}
+
+nav a:hover {
+  text-decoration: underline;
+}
+
+/* Estilos de la página */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+div.logo {
+  background-color: #E5CE37;
+  width: 112px;
+}
+
+div.logo>img {
+  height: 100px;
+  background-color: #E5CE37;
+}
+
+.nav-toggle {
+  cursor: pointer;
+  display: none;
+  height: 60px;
+  font-size: 60px;
+  margin: 0 20px;
+}
+
+@media (max-width: 1000px) {
+  nav ul {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #E5CE37;
+    border-top: 1px solid black;
+    text-align: center;
+    z-index: 1;
+  }
+
+  nav ul.show {
+    display: flex !important;
+    flex-direction: column;
+    top: 100px;
+    height: 440px;
+    width: 100%;
+  }
+
+  nav ul.show>li {
+    font-size: 36px;
+  }
+
+  .nav-toggle {
+    display: block;
+    padding: 0 20px;
+    background-color: #E5CE37;
+    color: black;
+  }
+}

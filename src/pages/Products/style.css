@@ -1,0 +1,23 @@
+.products-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 24px;
+}
+
+.products-container > form {
+    width: 100%;
+}
+
+.products-container>.ant-btn {
+    align-self: flex-end;
+}
+
+.page-heading {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-between;
+    align-items: baseline;
+}
