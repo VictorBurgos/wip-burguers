@@ -7,23 +7,23 @@ export const typeProduct = [
 
 export const burguers = [
   {
-    name: "Crispy Chicken",
+    label: "Crispy Chicken",
     value: "01",
   },
   {
-    name: "The GOAT",
+    label: "The GOAT",
     value: "02",
   },
   {
-    name: "Onion",
+    label: "Onion",
     value: "03",
   },
   {
-    name: "Cheese La Básica",
+    label: "Cheese La Básica",
     value: "04",
   },
   {
-    name: "Cheese La Bichota",
+    label: "Cheese La Bichota",
     value: "05",
   },
 ];
