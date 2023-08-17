@@ -4,6 +4,7 @@ import { Col, Row } from "antd";
 import CurrencyInput from "../CurrencyInput";
 import { productService } from "../../services/productService";
 import "./style.css";
+import { typeProduct } from "../../config/const";
 
 const ProductForm = ({ closeForm }) => {
   const [form] = Form.useForm();
@@ -73,10 +74,8 @@ const ProductForm = ({ closeForm }) => {
           >
             <Select
               options={[
-                { value: 'burgers', label: 'Hamburguesa' },
-                { value: 'drinks', label: 'Bebida' },
-                { value: 'fries', label: 'Complemento' },
-                { value: 'extras', label: 'Extra' },
+                { value: '-1', label: 'Selecciona una opción', disabled: true},
+                ...typeProduct
               ]}
             />
           </Form.Item>
