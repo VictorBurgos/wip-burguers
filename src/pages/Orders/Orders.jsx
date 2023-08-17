@@ -1,8 +1,9 @@
 import React from 'react';
+import './style.css'
 
 const OrdersPage = () => {
   return (
-    <div>
+    <div className=''>
       <h2>Página de Pedidos</h2>
     </div>
   );
