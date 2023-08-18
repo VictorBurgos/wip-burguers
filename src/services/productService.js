@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'http://192.168.3.221:4000/wipApi';
+const API_URL = 'http://localhost:4000/wipApi';
 
 const Product = (incommingProduct) => {
   const product = {};
