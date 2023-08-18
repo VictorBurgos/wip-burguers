@@ -1,5 +1,5 @@
-import React, { useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Orders from "../Orders";
 import Customers from "../Customers";
 import Products from "../Products";
@@ -9,9 +9,6 @@ import "./style.css";
 import classnames from "classnames";
 
 const Home = () => {
-  const [showMenu, setShowMenu] = useState(false);
-
-  const toggleMenu = () => setShowMenu(!showMenu);
   return (
     <Router>
       <div>
@@ -19,10 +16,7 @@ const Home = () => {
           <div className="logo">
             <img src="/images/logo.png" alt="Logo" />
           </div>
-          <div className="nav-toggle" onClick={toggleMenu}>
-            ☰
-          </div>
-          <ul className={classnames({ show: showMenu })}>
+          <ul>
             <li>
               <Link to="/orders">Pedidos</Link>
             </li>
