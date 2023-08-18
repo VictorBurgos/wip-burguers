@@ -68,36 +68,3 @@ div.logo>img {
   font-size: 60px;
   margin: 0 20px;
 }
-
-@media (max-width: 1000px) {
-  nav ul {
-    display: none;
-    position: absolute;
-    top: 100%;
-    left: 0;
-    width: 100%;
-    background-color: #E5CE37;
-    border-top: 1px solid black;
-    text-align: center;
-    z-index: 1;
-  }
-
-  nav ul.show {
-    display: flex !important;
-    flex-direction: column;
-    top: 100px;
-    height: 440px;
-    width: 100%;
-  }
-
-  nav ul.show>li {
-    font-size: 36px;
-  }
-
-  .nav-toggle {
-    display: block;
-    padding: 0 20px;
-    background-color: #E5CE37;
-    color: black;
-  }
-}
