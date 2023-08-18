@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import React, { useState } from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import Orders from "../Orders";
 import Customers from "../Customers";
 import Products from "../Products";
 import Inventory from "../Inventory";
-import './style.css'
+import ListOrders from "../ListOrders";
+import "./style.css";
 
 const Home = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -17,8 +18,10 @@ const Home = () => {
           <div className="logo">
             <img src="/images/logo.png" alt="Logo" />
           </div>
-          <div className="nav-toggle" onClick={toggleMenu}>☰</div>
-          <ul className={showMenu ? 'show' : ''}>
+          <div className="nav-toggle" onClick={toggleMenu}>
+            ☰
+          </div>
+          <ul className={showMenu ? "show" : ""}>
             <li>
               <Link to="/orders">Pedidos</Link>
             </li>
@@ -39,6 +42,7 @@ const Home = () => {
           <Route path="/customers" element={<Customers />} />
           <Route path="/products" element={<Products />} />
           <Route path="/inventory" element={<Inventory />} />
+          <Route path="/list" element={<ListOrders />} />
         </Routes>
       </div>
     </Router>

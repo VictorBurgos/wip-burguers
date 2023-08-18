@@ -1,23 +1,23 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import "./style.css";
 import { Form, Button, Input, Select, Col, Row, InputNumber } from "antd";
 import { useOrder } from "../../context/orders-context";
 import { burguers, typeProduct } from "../../config/const";
 import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
+import CountInput from "../../components/CountInput";
 const OrdersPage = ({ closeForm }) => {
-  const { getOrder, saveOrder } = useOrder();
+  const { saveOrder } = useOrder();
   const [form] = Form.useForm();
-  const [quantity, setQuantity] = useState(1);
-
-  const _add = (amount) => {
-    const newAmount = quantity + amount;
-    setQuantity(newAmount);
-  };
+  const [order, setOrder] = useState([]);
 
   const _save = async () => {
     try {
       const values = await form.validateFields();
-      await saveOrder(values);
+      const updatedOrder = [...order, values]; 
+      await saveOrder(updatedOrder);
+      setOrder(updatedOrder); // Update the state
+      form.resetFields();
     } catch (error) {
       console.log(error);
     }
@@ -99,29 +99,19 @@ const OrdersPage = ({ closeForm }) => {
                 },
               ]}
             >
-              <InputNumber
-                min={1}
-                max={10}
-                value={quantity}
-                onChange={(value) => setQuantity(value)}
-              />
-              <Button onClick={() => _add(-1)} disabled={quantity <= 1}>
-                <MinusOutlined />
-              </Button>
-              <Button onClick={() => _add(1)}>
-                <PlusOutlined />
-              </Button>
+              <CountInput />
             </Form.Item>
           </Col>
         </Row>
 
         <div className="buttons-container">
           <Button type="primary" htmlType="submit" onClick={_save}>
-            Guardar pedido
+            Añadir producto
           </Button>
-          <Button htmlType="reset" onClick={() => alert("adios")}>
-            Ver detalle del pedido
-          </Button>
+
+          <Link to="/list">
+            <Button htmlType="reset">Ver detalle del pedido</Button>
+          </Link>
         </div>
       </Form>
     </div>
