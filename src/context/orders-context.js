@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useEffect } from "react";
+import React, { useState, useMemo } from "react";
 const MenuContext = React.createContext();
 
 // Creo la función prooverá al componente y escuchara en toda la estructura
