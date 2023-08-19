@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./style.css";
-import { Space, Table, Button, Modal } from "antd";
+import { Space, Table, Button, Modal, Input } from "antd";
 import { useOrder } from "../../context/orders-context";
 import { findList, currency } from "../../config/utils";
 import { burguers } from "../../config/const";
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 
 const ListOrderPage = ({ closeForm }) => {
   const { getOrder, saveOrder } = useOrder();
@@ -16,6 +17,11 @@ const ListOrderPage = ({ closeForm }) => {
     productDetails: findList(burguers, order.product),
   }));
 
+  const [editProduct, setEditProduct] = useState({
+    visible: false,
+    data: false,
+  });
+
   const _delete = (index) => {
     Modal.confirm({
       title: "Estas seguro de eliminar?",
@@ -23,6 +29,14 @@ const ListOrderPage = ({ closeForm }) => {
         saveOrder([...getOrder.slice(0, index), ...getOrder.slice(index + 1)]);
       },
     });
+  };
+
+  const onEdit = (value, index) => {
+    saveOrder([
+      ...getOrder.slice(0, index),
+      value,
+      ...getOrder.slice(index + 1),
+    ]);
   };
 
   const _getTotal = () => {
@@ -52,12 +66,31 @@ const ListOrderPage = ({ closeForm }) => {
             key="action"
             render={(_, record, index) => (
               <Space size="middle">
-                <Button onClick={() => _delete(index)}>Eliminar</Button>
+                <Button onClick={() => _delete(index)}>
+                  <DeleteOutlined />
+                </Button>
+                <Button
+                  onClick={() =>
+                    setEditProduct({ visible: true, data: record, index })
+                  }
+                >
+                  <EditOutlined />
+                </Button>
               </Space>
             )}
           />
         </ColumnGroup>
       </Table>
+      <Modal
+        title="Editar producto"
+        open={editProduct.visible}
+        onText="Save"
+        onCancel={() => {
+          setEditProduct({ visible: false, data: false });
+        }}
+      >
+        {console.log(editProduct)}
+      </Modal>
 
       <div className="buttons-container">
         <Link to="/orders">

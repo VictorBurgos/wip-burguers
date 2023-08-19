@@ -26,4 +26,8 @@ export const burguers = [
     label: "Cheese La Bichota",
     value: "05",
   },
+ {
+  label: 'Otro',
+  value: '06',
+ } 
 ];
