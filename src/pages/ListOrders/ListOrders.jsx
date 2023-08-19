@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./style.css";
-import { Space, Table, Button, Modal, Input } from "antd";
+import { Space, Table, Button, Modal, Input, Tag } from "antd";
 import { useOrder } from "../../context/orders-context";
 import { findList, currency } from "../../config/utils";
 import { burguers } from "../../config/const";
@@ -10,7 +10,9 @@ import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 const ListOrderPage = ({ closeForm }) => {
   const { getOrder, saveOrder } = useOrder();
   const { Column, ColumnGroup } = Table;
-
+  const [quantity, setQuantity] = useState("");
+  const [notes, setNotes] = useState("");
+  const [product, setProduct] = useState("");
   const ordersWithIndex = getOrder.map((order, index) => ({
     ...order,
     orderNumber: index + 1,
@@ -24,7 +26,7 @@ const ListOrderPage = ({ closeForm }) => {
 
   const _delete = (index) => {
     Modal.confirm({
-      title: "Estas seguro de eliminar?",
+      title: "¿Estas seguro de eliminar?",
       onOk: () => {
         saveOrder([...getOrder.slice(0, index), ...getOrder.slice(index + 1)]);
       },
@@ -45,6 +47,13 @@ const ListOrderPage = ({ closeForm }) => {
       .reduce((a, b) => a + parseFloat(b), 0);
     return quantityTotal;
   };
+
+  useEffect(() => {
+    if (editProduct.visible) {
+      setQuantity(editProduct.data.quantity);
+      setNotes(editProduct.data.notes);
+    }
+  }, [editProduct]);
 
   return (
     <div className="">
@@ -82,13 +91,37 @@ const ListOrderPage = ({ closeForm }) => {
         </ColumnGroup>
       </Table>
       <Modal
-        title="Editar producto"
+        title="Editar"
         open={editProduct.visible}
-        onText="Save"
+        onText="Actualizar"
         onCancel={() => {
           setEditProduct({ visible: false, data: false });
         }}
       >
+        <Space>
+          <Tag> Producto </Tag>
+          <Input
+            placeholder="Editar producto"
+            value={product}
+            onChange={(e) => setProduct(e.target.value)}
+          />
+        </Space>
+        <Space>
+          <Tag> Cantidad </Tag>
+          <Input
+            placeholder="Editar cantidad"
+            value={quantity}
+            onChange={(e) => setQuantity(e.target.value)}
+          />
+        </Space>
+        <Space>
+          <Tag> Notas </Tag>
+          <Input
+            placeholder="Editar notas"
+            value={notes}
+            onChange={(e) => setNotes(e.target.value)}
+          />
+        </Space>
         {console.log(editProduct)}
       </Modal>
 
