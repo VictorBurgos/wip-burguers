@@ -1,9 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "./style.css";
-import { Space, Table, Tag, Button } from "antd";
+import { Space, Table, Button, Modal } from "antd";
 import { useOrder } from "../../context/orders-context";
-import { findList } from "../../config/utils";
+import { findList, currency } from "../../config/utils";
 import { burguers } from "../../config/const";
 
 const ListOrderPage = ({ closeForm }) => {
@@ -17,7 +17,19 @@ const ListOrderPage = ({ closeForm }) => {
   }));
 
   const _delete = (index) => {
-    saveOrder([...getOrder.slice(0, index), ...getOrder.slice(index + 1)]);
+    Modal.confirm({
+      title: "Estas seguro de eliminar?",
+      onOk: () => {
+        saveOrder([...getOrder.slice(0, index), ...getOrder.slice(index + 1)]);
+      },
+    });
+  };
+
+  const _getTotal = () => {
+    const quantityTotal = getOrder
+      .map((i) => i.price * i.quantity)
+      .reduce((a, b) => a + parseFloat(b), 0);
+    return quantityTotal;
   };
 
   return (
@@ -34,14 +46,13 @@ const ListOrderPage = ({ closeForm }) => {
           />
           <Column title="Notas" dataIndex="note" key="note" />
           <Column title="Cantidad" dataIndex="quantity" key="quantity" />
+          <Column title="Precio" dataIndex="price" key="price" />
           <Column
             title="Acciones"
             key="action"
-            render={(_, record) => (
+            render={(_, record, index) => (
               <Space size="middle">
-                <Button onClick={() => _delete(record.orderNumber)}>
-                  Eliminar
-                </Button>
+                <Button onClick={() => _delete(index)}>Eliminar</Button>
               </Space>
             )}
           />
@@ -49,12 +60,15 @@ const ListOrderPage = ({ closeForm }) => {
       </Table>
 
       <div className="buttons-container">
+        <Link to="/orders">
+          <Button htmlType="reset">Realizar nuevo pedido</Button>
+        </Link>
         <Button type="primary" htmlType="submit">
           Realizar pedido
         </Button>
-        <Link to="/orders">
-          <Button htmlType="reset">Regresar a añadir producto</Button>
-        </Link>
+      </div>
+      <div>
+        <h1> Total: $ {currency(_getTotal(), 2)}</h1>
       </div>
     </div>
   );

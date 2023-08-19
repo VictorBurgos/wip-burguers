@@ -4,8 +4,7 @@ import "./style.css";
 import { Form, Button, Input, Select, Col, Row, InputNumber } from "antd";
 import { useOrder } from "../../context/orders-context";
 import { burguers, typeProduct } from "../../config/const";
-import { MinusOutlined, PlusOutlined } from "@ant-design/icons";
-import CountInput from "../../components/CountInput";
+import  CurrencyInput  from "../../components/CurrencyInput";
 const OrdersPage = ({ closeForm }) => {
   const { saveOrder } = useOrder();
   const [form] = Form.useForm();
@@ -14,7 +13,7 @@ const OrdersPage = ({ closeForm }) => {
   const _save = async () => {
     try {
       const values = await form.validateFields();
-      const updatedOrder = [...order, values]; 
+      const updatedOrder = [...order, values];
       await saveOrder(updatedOrder);
       setOrder(updatedOrder); // Update the state
       form.resetFields();
@@ -99,7 +98,22 @@ const OrdersPage = ({ closeForm }) => {
                 },
               ]}
             >
-              <CountInput />
+              <InputNumber min={1} />
+            </Form.Item>
+          </Col>
+          <Col span={8}>
+            <Form.Item
+              label="Precio"
+              name="price"
+              type="number"
+              rules={[
+                {
+                  required: true,
+                  message: "Por favor escribe cuantos del producto",
+                },
+              ]}
+            >
+              <CurrencyInput />
             </Form.Item>
           </Col>
         </Row>
