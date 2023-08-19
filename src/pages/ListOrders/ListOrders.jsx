@@ -11,7 +11,7 @@ const ListOrderPage = ({ closeForm }) => {
   const { getOrder, saveOrder } = useOrder();
   const { Column, ColumnGroup } = Table;
   const [quantity, setQuantity] = useState("");
-  const [notes, setNotes] = useState("");
+  const [note, setNote] = useState("");
   const [product, setProduct] = useState("");
   const ordersWithIndex = getOrder.map((order, index) => ({
     ...order,
@@ -32,13 +32,19 @@ const ListOrderPage = ({ closeForm }) => {
       },
     });
   };
-
   const onEdit = (value, index) => {
-    saveOrder([
-      ...getOrder.slice(0, index),
-      value,
-      ...getOrder.slice(index + 1),
-    ]);
+    const updatedOrder = [...getOrder];
+    const updatedObj = {
+      ...updatedOrder[index],
+      quantity,
+      note,
+    };
+
+    updatedOrder[index] = updatedObj;
+
+    saveOrder(updatedOrder);
+
+    setEditProduct({ visible: false, data: false });
   };
 
   const _getTotal = () => {
@@ -51,7 +57,7 @@ const ListOrderPage = ({ closeForm }) => {
   useEffect(() => {
     if (editProduct.visible) {
       setQuantity(editProduct.data.quantity);
-      setNotes(editProduct.data.notes);
+      setNote(editProduct.data.notes);
     }
   }, [editProduct]);
 
@@ -97,6 +103,7 @@ const ListOrderPage = ({ closeForm }) => {
         onCancel={() => {
           setEditProduct({ visible: false, data: false });
         }}
+        onOk={() => onEdit(editProduct.data, editProduct.index)}
       >
         <Space>
           <Tag> Producto </Tag>
@@ -118,11 +125,10 @@ const ListOrderPage = ({ closeForm }) => {
           <Tag> Notas </Tag>
           <Input
             placeholder="Editar notas"
-            value={notes}
-            onChange={(e) => setNotes(e.target.value)}
+            value={note}
+            onChange={(e) => setNote(e.target.value)}
           />
         </Space>
-        {console.log(editProduct)}
       </Modal>
 
       <div className="buttons-container">
