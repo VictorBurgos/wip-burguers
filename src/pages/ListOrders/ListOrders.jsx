@@ -31,18 +31,14 @@ const ListOrderPage = ({ closeForm }) => {
   };
 
   const _onClose = (reload = false, index) => {
-    console.log(index);
     if (!visible.data) {
       saveOrder([...getOrder, reload]);
     } else {
-      const updatedOrder = [...getOrder];
-      const updatedObj = {
-        ...updatedOrder[index],
+      saveOrder([
+        ...getOrder.slice(0, index),
         reload,
-      };
-      updatedOrder[index] = updatedObj;
-
-      saveOrder(updatedOrder);
+        ...getOrder.slice(index + 1),
+      ]);
     }
     setVisible({ visible: false, data: false });
   };
