@@ -23,9 +23,9 @@ const ProductForm = ({ closeForm }) => {
   };
 
   return (
-    <Form form={form}>
+    <Form form={form} layout="vertical">
       <Row gutter={16}>
-        <Col span={16}>
+        <Col span={20}>
           <Form.Item
             label="Nombre del producto"
             name="name"
@@ -39,7 +39,7 @@ const ProductForm = ({ closeForm }) => {
             <Input />
           </Form.Item>
         </Col>
-        <Col span={8}>
+        <Col span={4}>
           <Form.Item
             label="Precio"
             name="price"

@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Button, Input} from "antd";
+import { Form, Button, Input } from "antd";
 import { Col, Row } from "antd";
 import { productService } from "../../services/productService";
 import "./style.css";
@@ -23,7 +23,7 @@ const CustomerForm = ({ closeForm }) => {
   };
 
   return (
-    <Form form={form}>
+    <Form form={form} layout="vertical">
       <Row gutter={16}>
         <Col span={16}>
           <Form.Item
@@ -36,29 +36,45 @@ const CustomerForm = ({ closeForm }) => {
               },
             ]}
           >
-            <Input />
+            <Input maxLength={50} />
           </Form.Item>
         </Col>
         <Col span={8}>
+          <Form.Item
+            label="Número de teléfono"
+            name="phone"
+            rules={[
+              {
+                required: true,
+                message: "Por favor escribe tu número de teléfono",
+              },
+            ]}
+          >
+            <Input maxLength={10} />
+          </Form.Item>
+        </Col>
+      </Row>
+      <Row gutter={16}>
+        <Col span={16}>
           <Form.Item
             label="Dirección"
             name="address"
             rules={[
               {
                 required: true,
-                type: "varchar",
-                message: "Por favor escribe tu direccion",
+                message: "Por favor escribe tu dirección",
               },
             ]}
           >
-            <Input />
+            <Input/>
           </Form.Item>
         </Col>
-      </Row>
-      <Row>
-        <Col span={24}>
-          <Form.Item label="Numero de telefono" name="phone">
-            <Input />
+        <Col span={8}>
+          <Form.Item
+            label="Distancia"
+            name="distance"
+          >
+            <Input maxLength={8} />
           </Form.Item>
         </Col>
       </Row>
