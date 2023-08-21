@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { Button, Typography } from "antd";
 import { productService } from "../../services/productService";
 import "./style.css";
+import ProductCard from "../ProductCard";
 
 const { Title } = Typography;
-const { Text } = Typography;
 
 const ProductList = (props) => {
   const { startAddingMode, startEditingMode } = props;
@@ -19,29 +19,6 @@ const ProductList = (props) => {
     fetchProducts();
   }, []);
 
-  const Products = products.map((product) => {
-    const id = product.name;
-    const formattedPrice = new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-    }).format(product.price);
-    return (
-      <div
-        key={id}
-        className="product-card"
-        onClick={() => startEditingMode(id)}
-      >
-        <div className="product-top">
-          <Title level={3}>{product.name}</Title>
-          <Text underline strong size={"large"}>
-            {formattedPrice}
-          </Text>
-        </div>
-        <Text>{product.description}</Text>
-      </div>
-    );
-  });
-
   return (
     <>
       <div className="page-heading">
@@ -50,7 +27,11 @@ const ProductList = (props) => {
           Agregar
         </Button>
       </div>
-      <div className="product-list">{Products}</div>
+      <div className="product-list">
+        {products.map((p) => (
+          <ProductCard editingMode={startEditingMode} product={p} />
+        ))}
+      </div>
     </>
   );
 };
