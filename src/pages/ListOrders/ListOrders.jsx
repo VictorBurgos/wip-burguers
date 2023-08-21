@@ -1,25 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./style.css";
-import { Space, Table, Button, Modal, Input, Tag } from "antd";
+import { Space, Table, Button, Modal } from "antd";
 import { useOrder } from "../../context/orders-context";
 import { findList, currency } from "../../config/utils";
 import { burguers } from "../../config/const";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import ModalProduct from "../../components/modal/ListOrders/ModalProduct";
 
 const ListOrderPage = ({ closeForm }) => {
   const { getOrder, saveOrder } = useOrder();
   const { Column, ColumnGroup } = Table;
-  const [quantity, setQuantity] = useState("");
-  const [note, setNote] = useState("");
-  const [product, setProduct] = useState("");
   const ordersWithIndex = getOrder.map((order, index) => ({
     ...order,
     orderNumber: index + 1,
     productDetails: findList(burguers, order.product),
   }));
-
-  const [editProduct, setEditProduct] = useState({
+  const [visible, setVisible] = useState({
     visible: false,
     data: false,
   });
@@ -32,19 +29,22 @@ const ListOrderPage = ({ closeForm }) => {
       },
     });
   };
-  const onEdit = (value, index) => {
-    const updatedOrder = [...getOrder];
-    const updatedObj = {
-      ...updatedOrder[index],
-      quantity,
-      note,
-    };
 
-    updatedOrder[index] = updatedObj;
+  const _onClose = (reload = false, index) => {
+    console.log(index);
+    if (!visible.data) {
+      saveOrder([...getOrder, reload]);
+    } else {
+      const updatedOrder = [...getOrder];
+      const updatedObj = {
+        ...updatedOrder[index],
+        reload,
+      };
+      updatedOrder[index] = updatedObj;
 
-    saveOrder(updatedOrder);
-
-    setEditProduct({ visible: false, data: false });
+      saveOrder(updatedOrder);
+    }
+    setVisible({ visible: false, data: false });
   };
 
   const _getTotal = () => {
@@ -54,16 +54,19 @@ const ListOrderPage = ({ closeForm }) => {
     return quantityTotal;
   };
 
-  useEffect(() => {
-    if (editProduct.visible) {
-      setQuantity(editProduct.data.quantity);
-      setNote(editProduct.data.notes);
-    }
-  }, [editProduct]);
-
   return (
     <div className="">
       <h2>Página de Pedidos</h2>
+
+      <div className="buttons-container">
+        <Button
+          type="primary"
+          htmlType="submit"
+          onClick={() => setVisible({ visible: true, data: false })}
+        >
+          Añadir nuevo producto
+        </Button>
+      </div>
 
       <Table dataSource={ordersWithIndex}>
         <ColumnGroup title="Detalle del pedido">
@@ -86,7 +89,7 @@ const ListOrderPage = ({ closeForm }) => {
                 </Button>
                 <Button
                   onClick={() =>
-                    setEditProduct({ visible: true, data: record, index })
+                    setVisible({ visible: true, data: record, index })
                   }
                 >
                   <EditOutlined />
@@ -96,41 +99,6 @@ const ListOrderPage = ({ closeForm }) => {
           />
         </ColumnGroup>
       </Table>
-      <Modal
-        title="Editar"
-        open={editProduct.visible}
-        onText="Actualizar"
-        onCancel={() => {
-          setEditProduct({ visible: false, data: false });
-        }}
-        onOk={() => onEdit(editProduct.data, editProduct.index)}
-      >
-        <Space>
-          <Tag> Producto </Tag>
-          <Input
-            placeholder="Editar producto"
-            value={product}
-            onChange={(e) => setProduct(e.target.value)}
-          />
-        </Space>
-        <Space>
-          <Tag> Cantidad </Tag>
-          <Input
-            placeholder="Editar cantidad"
-            value={quantity}
-            onChange={(e) => setQuantity(e.target.value)}
-          />
-        </Space>
-        <Space>
-          <Tag> Notas </Tag>
-          <Input
-            placeholder="Editar notas"
-            value={note}
-            onChange={(e) => setNote(e.target.value)}
-          />
-        </Space>
-      </Modal>
-
       <div className="buttons-container">
         <Link to="/orders">
           <Button htmlType="reset">Realizar nuevo pedido</Button>
@@ -142,6 +110,14 @@ const ListOrderPage = ({ closeForm }) => {
       <div>
         <h1> Total: $ {currency(_getTotal(), 2)}</h1>
       </div>
+      <ModalProduct
+        title="Añadir"
+        open={visible.visible}
+        data={visible.data}
+        onText="Actualizar"
+        onClose={(data) => _onClose(data, visible.index)}
+        onCancel={() => setVisible({ visible: false, data: false })}
+      />
     </div>
   );
 };
