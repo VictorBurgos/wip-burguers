@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./style.css";
 import { Space, Table, Button, Modal } from "antd";
@@ -107,10 +107,8 @@ const ListOrderPage = ({ closeForm }) => {
         <h1> Total: $ {currency(_getTotal(), 2)}</h1>
       </div>
       <ModalProduct
-        title="Añadir"
         open={visible.visible}
         data={visible.data}
-        onText="Actualizar"
         onClose={(data) => _onClose(data, visible.index)}
         onCancel={() => setVisible({ visible: false, data: false })}
       />
