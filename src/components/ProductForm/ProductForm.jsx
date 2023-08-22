@@ -8,7 +8,6 @@ import { typeProduct } from "../../config/const";
 
 const ProductForm = ({ closeForm }) => {
   const [form] = Form.useForm();
-
   const save = async () => {
     try {
       const values = await form.validateFields();

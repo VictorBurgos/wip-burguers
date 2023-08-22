@@ -1,18 +1,17 @@
 import React from "react";
 import { Form, Button, Input } from "antd";
 import { Col, Row } from "antd";
-import { productService } from "../../services/productService";
+import { customerService } from "../../services/customerService";
 import "./style.css";
 
 const { TextArea } = Input;
 
 const CustomerForm = ({ closeForm }) => {
   const [form] = Form.useForm();
-
   const save = async () => {
     try {
       const values = await form.validateFields();
-      productService.createProduct(values);
+      customerService.createCustomer(values);
     } catch (error) {
       console.error("Form validation error:", error);
     }
