@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Modal, Select, Input, Space } from "antd";
+import { Modal, Select, Input, Space, Col, Row, InputNumber } from "antd";
 import { burguers, typeProduct } from "../../../config/const";
 import CurrencyInput from "../../CurrencyInput";
 
@@ -47,39 +47,74 @@ const ModalProduct = (props) => {
         onOk={_save}
       >
         <Space>
-          <Select
-            value={category}
-            onChange={(value) => setCategory(value)}
-            options={[
-              {
-                value: "-1",
-                label: "Selecciona una opción",
-                disabled: true,
-              },
-              ...typeProduct,
-            ]}
-            style={{
-              width: 120,
-            }}
-          />
-          <Select
-            value={product}
-            onChange={(value) => setProduct(value)}
-            options={[
-              {
-                value: "-1",
-                label: "Selecciona una opción",
-                disabled: true,
-              },
-              ...burguers,
-            ]}
-          />
-          <Input value={note} onChange={(e) => setNote(e.target.value)} />
-          <Input
-            value={quantity}
-            onChange={(e) => setQuantity(e.target.value)}
-          />
-          <CurrencyInput value={price} onChange={(value) => setPrice(value)} />
+          <Col span={24}>
+            <Row>
+              <Space wrap>
+                <div>
+                  <p>
+                    <b> Categoría </b>
+                  </p>
+                  <Select
+                    value={category}
+                    onChange={(value) => setCategory(value)}
+                    options={[
+                      {
+                        value: "-1",
+                        label: "Selecciona una opción",
+                        disabled: true,
+                      },
+                      ...typeProduct,
+                    ]}
+                  />
+                </div>
+                <div>
+                  <p>
+                    <b> Producto </b>
+                  </p>
+                  <Select
+                    value={product}
+                    onChange={(value) => setProduct(value)}
+                    options={[
+                      {
+                        value: "-1",
+                        label: "Selecciona una opción",
+                        disabled: true,
+                      },
+                      ...burguers,
+                    ]}
+                  />
+                </div>
+              </Space>
+            </Row>
+
+            <Row>
+              <p>
+                <b> Descripción </b>
+              </p>
+              <Input value={note} onChange={(e) => setNote(e.target.value)} />
+              <Space wrap>
+                <div>
+                  <p>
+                    <b> Cantidad </b>
+                  </p>
+                  <InputNumber
+                    min={1}
+                    value={quantity}
+                    onChange={(value) => setQuantity(value)}
+                  />
+                </div>
+                <div>
+                  <p>
+                    <b> Precio </b>
+                  </p>
+                  <CurrencyInput
+                    value={price}
+                    onChange={(value) => setPrice(value)}
+                  />
+                </div>
+              </Space>
+            </Row>
+          </Col>
         </Space>
       </Modal>
     </>

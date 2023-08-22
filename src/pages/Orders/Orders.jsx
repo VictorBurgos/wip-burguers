@@ -15,10 +15,10 @@ const OrdersPage = ({ closeForm }) => {
       const values = await form.validateFields();
       const updatedOrder = [...order, values];
       await saveOrder(updatedOrder);
-      setOrder(updatedOrder); // Update the state
+      setOrder(updatedOrder);
       form.resetFields();
     } catch (error) {
-      console.log(error);
+      alert(error);
     }
   };
 
