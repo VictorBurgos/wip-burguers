@@ -1,28 +1,35 @@
-import React from 'react';
-import { Button, Typography } from "antd";
-import CustomerForm from "../../components/CustomerForm";
+import React, { useState } from "react";
+import CustomerList from "../../components/CustomerList";
+import AddNewCustomer from "../../components/AddNewCustomer";
+import EditCustomer from "../../components/EditCustomer";
 import "./style.css";
 
-const { Title } = Typography;
-
 const Customers = () => {
-  const endAddingMode = () => { 
-    console.log("endAdding");
+  const [pageMode, setPageMode] = useState("listing");
+  const [customerId, setCustomerId] = useState("");
+
+  const handleStartEditing = (id) => {
+    setCustomerId(id);
+    setPageMode("editing");
   };
+
   return (
-    <div>
-      <h1>Clientes</h1>
-      <div className='customer-heading'>
-        <Title level={2}>Agregar nuevo cliente</Title>
-        <Button
-          className="cancel-button"
-          type="primary"
-          danger
-        >
-          Cancelar
-        </Button>
-      </div>
-      <CustomerForm closeForm={endAddingMode}/>
+    <div className="customers-container">
+      {pageMode === "editing" && (
+        <EditCustomer
+          endEditingMode={() => setPageMode("listing")}
+          customerId={customerId}
+        />
+      )}
+      {pageMode === "adding" && (
+        <AddNewCustomer endAddingMode={() => setPageMode("listing")} />
+      )}
+      {pageMode === "listing" && (
+        <CustomerList
+          startAddingMode={() => setPageMode("adding")}
+          startEditingMode={handleStartEditing}
+        />
+      )}
     </div>
   );
 };

@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import ProductList from "../../components/ProductList";
-
 import AddNewProduct from "../../components/AddNewProduct";
 import EditProduct from "../../components/EditProduct";
-
 import "./style.css";
 
 const Products = () => {
