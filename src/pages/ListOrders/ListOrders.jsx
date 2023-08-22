@@ -5,7 +5,7 @@ import { Space, Table, Button, Modal } from "antd";
 import { useOrder } from "../../context/orders-context";
 import { findList, currency } from "../../config/utils";
 import { burguers } from "../../config/const";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
 import ModalProduct from "../../components/modal/ListOrders/ModalProduct";
 
 const ListOrderPage = ({ closeForm }) => {
@@ -60,7 +60,8 @@ const ListOrderPage = ({ closeForm }) => {
           htmlType="submit"
           onClick={() => setVisible({ visible: true, data: false })}
         >
-          Añadir nuevo producto
+          <PlusOutlined />
+          Añadir producto
         </Button>
       </div>
 
@@ -80,16 +81,17 @@ const ListOrderPage = ({ closeForm }) => {
             key="action"
             render={(_, record, index) => (
               <Space size="middle">
-                <Button onClick={() => _delete(index)}>
-                  <DeleteOutlined />
-                </Button>
-                <Button
+                 <Button
                   onClick={() =>
                     setVisible({ visible: true, data: record, index })
                   }
                 >
                   <EditOutlined />
                 </Button>
+                <Button onClick={() => _delete(index)} danger>
+                  <DeleteOutlined />
+                </Button>
+               
               </Space>
             )}
           />

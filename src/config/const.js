@@ -14,7 +14,7 @@ export const burguers = [
     label: "The GOAT",
     value: "02",
   },
-  {
+  { 
     label: "Onion",
     value: "03",
   },
@@ -26,8 +26,24 @@ export const burguers = [
     label: "Cheese La Bichota",
     value: "05",
   },
- {
-  label: 'Otro',
-  value: '06',
- } 
+  {
+    label: "Otro",
+    value: "06",
+  },
 ];
+
+export const status = {
+  active: "Activo",
+  pending: "Pendiente",
+  cancel: "Cancelado",
+  warning: "Cuidado",
+  processing: "Procesando",
+};
+
+export const colorStatus = {
+  active: "success",
+  pending: "default",
+  cancel: "error",
+  warning: "warning",
+  processing: "processing",
+};
