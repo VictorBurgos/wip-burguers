@@ -6,6 +6,7 @@ import Products from "../Products";
 import Inventory from "../Inventory";
 import ListOrders from "../ListOrders";
 import "./style.css";
+import classnames from "classnames";
 
 const Home = () => {
   const [showMenu, setShowMenu] = useState(false);
@@ -21,7 +22,7 @@ const Home = () => {
           <div className="nav-toggle" onClick={toggleMenu}>
             ☰
           </div>
-          <ul className={showMenu ? "show" : ""}>
+          <ul className={classnames({ show: showMenu })}>
             <li>
               <Link to="/orders">Pedidos</Link>
             </li>

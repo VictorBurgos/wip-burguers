@@ -6,7 +6,7 @@ import { useOrder } from "../../context/orders-context";
 import { findList, currency } from "../../config/utils";
 import { burguers } from "../../config/const";
 import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
-import ModalProduct from "../../components/modal/ListOrders/ModalProduct";
+import ModalProduct from "../../components/modal/ListOrders/";
 
 const ListOrderPage = ({ closeForm }) => {
   const { getOrder, saveOrder } = useOrder();
@@ -81,7 +81,7 @@ const ListOrderPage = ({ closeForm }) => {
             key="action"
             render={(_, record, index) => (
               <Space size="middle">
-                 <Button
+                <Button
                   onClick={() =>
                     setVisible({ visible: true, data: record, index })
                   }
@@ -91,7 +91,6 @@ const ListOrderPage = ({ closeForm }) => {
                 <Button onClick={() => _delete(index)} danger>
                   <DeleteOutlined />
                 </Button>
-               
               </Space>
             )}
           />
