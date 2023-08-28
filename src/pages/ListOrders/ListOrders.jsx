@@ -5,8 +5,15 @@ import { Space, Table, Button, Modal } from "antd";
 import { useOrder } from "../../context/orders-context";
 import { findList, currency } from "../../config/utils";
 import { burguers } from "../../config/const";
-import { DeleteOutlined, EditOutlined, PlusOutlined } from "@ant-design/icons";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  PlusOutlined,
+  PrinterOutlined,
+} from "@ant-design/icons";
 import ModalProduct from "../../components/modal/ListOrders/";
+import ProductPDF from "../../components/ProductPDF";
+import { PDFViewer, PDFDownloadLink } from "@react-pdf/renderer";
 
 const ListOrderPage = ({ closeForm }) => {
   const { getOrder, saveOrder } = useOrder();
@@ -98,11 +105,22 @@ const ListOrderPage = ({ closeForm }) => {
       </Table>
       <div className="buttons-container">
         <Link to="/orders">
-          <Button htmlType="reset">Realizar nuevo pedido</Button>
+          <Button type="primary" htmlType="reset">
+            Realizar nuevo pedido
+          </Button>
         </Link>
-        <Button type="primary" htmlType="submit">
-          Realizar pedido
-        </Button>
+
+        <PDFDownloadLink
+          document={<ProductPDF total={_getTotal()} data={getOrder} />}
+          fileName="comand"
+        >
+          <Button type="dashed" htmlType="submit">
+            Imprimir ticket <PrinterOutlined />
+          </Button>
+        </PDFDownloadLink>
+        {/* <PDFViewer>
+          <ProductPDF data={getOrder} />
+        </PDFViewer> */}
       </div>
       <div>
         <h1> Total: $ {currency(_getTotal(), 2)}</h1>
