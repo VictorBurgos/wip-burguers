@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
   },
   ticket: {
-    width: "200px",
+    width: "100px",
     margin: "10px",
     padding: "10px",
     border: "1px solid #ccc",
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
 const ProductPDF = (props) => {
   return (
     <Document>
-      <Page size="A4" style={styles.page}>
+      <Page size='A8' style={styles.page}>
         <View>
           {props.data?.map((item, index) => (
             <View key={index} style={styles.ticket}>
