@@ -6,7 +6,7 @@ const Product = (incommingProduct) => {
   const product = {};
   if(!!incommingProduct.id) product.id = incommingProduct.id;
   if(!!incommingProduct.name) product.name = incommingProduct.name;
-  if(!!incommingProduct.description) product.descriptio = incommingProduct.description;
+  if(!!incommingProduct.description) product.description = incommingProduct.description;
   if(!!incommingProduct.price) product.price = incommingProduct.price;
   if(!!incommingProduct.image_name) product.image_name = incommingProduct.image_name;
   if(!!incommingProduct.category) product.category = incommingProduct.category;
