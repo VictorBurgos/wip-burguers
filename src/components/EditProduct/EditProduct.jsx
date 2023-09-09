@@ -1,12 +1,23 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Typography } from "antd";
 import ProductForm from "../ProductForm";
 import "./style.css";
+import { productService } from '../../services/productService';
 
 const { Title } = Typography;
 
 export default function EditProduct(props) {
-  const {endEditingMode} = props;
+  const {endEditingMode, productId} = props;
+
+  const [product, setProduct] = useState({});
+
+  const fetchProduct = async () => {
+    const incommingProduct = await productService.getProductById(productId)
+    setProduct(incommingProduct);
+  }
+  useEffect(() => {
+    fetchProduct();
+  }, []);
   return (
     <>
         <div className="page-heading">
@@ -20,7 +31,7 @@ export default function EditProduct(props) {
             Cancelar
         </Button>
         </div>
-        <ProductForm closeForm={endEditingMode} />
+        <ProductForm closeForm={endEditingMode} product={product}/>
     </>
   )
 }

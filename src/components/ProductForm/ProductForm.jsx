@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Form, Button, Input, Select } from "antd";
 import { Col, Row } from "antd";
 import CurrencyInput from "../CurrencyInput";
@@ -6,12 +6,15 @@ import { productService } from "../../services/productService";
 import "./style.css";
 import { typeProduct } from "../../config/const";
 
-const ProductForm = ({ closeForm }) => {
+const ProductForm = ({ closeForm, product: incommingProduct }) => {
   const [form] = Form.useForm();
+
+  const [product, setProduct] = useState();
   const save = async () => {
     try {
       const values = await form.validateFields();
-      productService.createProduct(values);
+      if(isNewProduct) productService.createProduct(values);
+      else productService.updateProduct(product.id, values);
     } catch (error) {
       console.error("Form validation error:", error);
     }
@@ -21,8 +24,15 @@ const ProductForm = ({ closeForm }) => {
     closeForm();
   };
 
+  const [isNewProduct, setIsNewProduct] = useState(true);
+  useEffect(() => {
+    setIsNewProduct(incommingProduct?.id === undefined);
+    setProduct(incommingProduct);
+    form.resetFields();
+  }, [incommingProduct]);
+
   return (
-    <Form form={form} layout="vertical">
+    <Form form={form} layout="vertical" initialValues={product}>
       <Row gutter={16}>
         <Col span={20}>
           <Form.Item
@@ -63,7 +73,9 @@ const ProductForm = ({ closeForm }) => {
       </Row>
       <Row gutter={16}>
         <Col span={8}>
-          <Form.Item label="Categoria" name="category"
+          <Form.Item
+            label="Categoria"
+            name="category"
             rules={[
               {
                 required: true,
@@ -73,24 +85,21 @@ const ProductForm = ({ closeForm }) => {
           >
             <Select
               options={[
-                { value: '-1', label: 'Selecciona una opción', disabled: true},
-                ...typeProduct
+                { value: "-1", label: "Selecciona una opción", disabled: true },
+                ...typeProduct,
               ]}
             />
           </Form.Item>
         </Col>
-        <Col span={8}>
+        {/* <Col span={8}>
           <Form.Item label="Image Name" name="imageName">
             <Input />
           </Form.Item>
-        </Col>
+        </Col> */}
       </Row>
       <div className="buttons-container">
         <Button type="primary" htmlType="submit" onClick={saveAndClose}>
           Guardar y salir
-        </Button>
-        <Button htmlType="reset" onClick={save}>
-          Guardar y nuevo
         </Button>
       </div>
     </Form>

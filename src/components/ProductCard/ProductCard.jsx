@@ -22,9 +22,7 @@ const ProductCard = ( props ) => {
         >
           <div className="product-top">
             <Title level={3}>{product.name}</Title>
-            <Text strong size={"large"}>
-              {formattedPrice}
-            </Text>
+            <Title level={3}>{formattedPrice}</Title>
           </div>
           <Text>{product.description}</Text>
         </div>

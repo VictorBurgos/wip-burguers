@@ -10,15 +10,20 @@ const ProductList = (props) => {
   const { startAddingMode, startEditingMode } = props;
   const [products, setProducts] = useState([]);
 
+  const fetchProducts = async () => {
+    const productsData = await productService.getAllProducts();
+    setProducts(productsData);
+  };
   useEffect(() => {
-    const fetchProducts = async () => {
-      const productsData = await productService.getAllProducts();
-      setProducts(productsData);
-    };
-
     fetchProducts();
   }, []);
 
+  const ProductsCards = products.sort((a, b) => a.price - b.price).map((p) => {
+    const key = p.id;
+    const handleStartEditing = () => startEditingMode(p.id);
+    return <ProductCard key={key} editingMode={handleStartEditing} product={p} />
+  })
+  
   return (
     <>
       <div className="page-heading">
@@ -27,11 +32,7 @@ const ProductList = (props) => {
           Agregar
         </Button>
       </div>
-      <div className="product-list">
-        {products.map((p) => (
-          <ProductCard editingMode={startEditingMode} product={p} />
-        ))}
-      </div>
+      <div className="product-list">{ProductsCards}</div>
     </>
   );
 };
