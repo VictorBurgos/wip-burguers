@@ -12,9 +12,7 @@ export function OrderProvider(props) {
   const save = (obj) => {
     if (obj && obj.getOrder)
       setGetOrder({
-        ...obj.getOrder,
-        active: true,
-        save: true,
+        ...obj.getOrder
       });
   };
 

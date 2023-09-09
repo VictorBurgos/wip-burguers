@@ -1,4 +1,4 @@
-export const findList = (list, value) => list.find((i) => i.value === value)?.name;
+export const findList = (list, value) => list.find((i) => i.value === value)?.label;
 
 export const currency = (total, fixed = 2) => {
 	return parseFloat(total)

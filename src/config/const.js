@@ -7,23 +7,43 @@ export const typeProduct = [
 
 export const burguers = [
   {
-    name: "Crispy Chicken",
+    label: "Crispy Chicken",
     value: "01",
   },
   {
-    name: "The GOAT",
+    label: "The GOAT",
     value: "02",
   },
-  {
-    name: "Onion",
+  { 
+    label: "Onion",
     value: "03",
   },
   {
-    name: "Cheese La Básica",
+    label: "Cheese La Básica",
     value: "04",
   },
   {
-    name: "Cheese La Bichota",
+    label: "Cheese La Bichota",
     value: "05",
   },
+  {
+    label: "Otro",
+    value: "06",
+  },
 ];
+
+export const status = {
+  active: "Activo",
+  pending: "Pendiente",
+  cancel: "Cancelado",
+  warning: "Cuidado",
+  processing: "Procesando",
+};
+
+export const colorStatus = {
+  active: "success",
+  pending: "default",
+  cancel: "error",
+  warning: "warning",
+  processing: "processing",
+};

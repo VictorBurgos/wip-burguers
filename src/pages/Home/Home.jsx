@@ -4,7 +4,9 @@ import Orders from "../Orders";
 import Customers from "../Customers";
 import Products from "../Products";
 import Inventory from "../Inventory";
-import './style.css'
+import ListOrders from "../ListOrders";
+import "./style.css";
+import classnames from "classnames";
 
 const Home = () => {
   return (
@@ -35,6 +37,7 @@ const Home = () => {
           <Route path="/customers" element={<Customers />} />
           <Route path="/products" element={<Products />} />
           <Route path="/inventory" element={<Inventory />} />
+          <Route path="/list" element={<ListOrders />} />
         </Routes>
       </div>
     </Router>
