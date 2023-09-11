@@ -16,9 +16,9 @@ import ProductPDF from "../../components/ProductPDF";
 import { PDFViewer, PDFDownloadLink } from "@react-pdf/renderer";
 
 const ListOrderPage = ({ closeForm }) => {
-  const { getOrder, saveOrder } = useOrder();
+  const { order, saveOrder } = useOrder();
   const { Column, ColumnGroup } = Table;
-  const ordersWithIndex = getOrder.map((order, index) => ({
+  const ordersWithIndex = order.map((order, index) => ({
     ...order,
     orderNumber: index + 1,
     productDetails: findList(burguers, order.product),
@@ -28,30 +28,25 @@ const ListOrderPage = ({ closeForm }) => {
     data: false,
   });
 
-  const _delete = (index) => {
+  const deleteProductByIndex = (index) => {
     Modal.confirm({
       title: "¿Estas seguro de eliminar?",
-      onOk: () => {
-        saveOrder([...getOrder.slice(0, index), ...getOrder.slice(index + 1)]);
-      },
+      onOk: () =>
+        saveOrder([...order.slice(0, index), ...order.slice(index + 1)]),
     });
   };
 
   const _onClose = (reload = false, index) => {
     if (!visible.data) {
-      saveOrder([...getOrder, reload]);
+      saveOrder([...order, reload]);
     } else {
-      saveOrder([
-        ...getOrder.slice(0, index),
-        reload,
-        ...getOrder.slice(index + 1),
-      ]);
+      saveOrder([...order.slice(0, index), reload, ...order.slice(index + 1)]);
     }
     setVisible({ visible: false, data: false });
   };
 
   const _getTotal = () => {
-    const quantityTotal = getOrder
+    const quantityTotal = order
       .map((i) => i.price * i.quantity)
       .reduce((a, b) => a + parseFloat(b), 0);
     return quantityTotal;
@@ -95,7 +90,7 @@ const ListOrderPage = ({ closeForm }) => {
                 >
                   <EditOutlined />
                 </Button>
-                <Button onClick={() => _delete(index)} danger>
+                <Button onClick={() => deleteProductByIndex(index)} danger>
                   <DeleteOutlined />
                 </Button>
               </Space>
@@ -111,7 +106,7 @@ const ListOrderPage = ({ closeForm }) => {
         </Link>
 
         <PDFDownloadLink
-          document={<ProductPDF total={_getTotal()} data={getOrder} />}
+          document={<ProductPDF total={_getTotal()} data={order} />}
           fileName="comand"
         >
           <Button type="dashed" htmlType="submit">
@@ -119,7 +114,7 @@ const ListOrderPage = ({ closeForm }) => {
           </Button>
         </PDFDownloadLink>
         {/* <PDFViewer>
-          <ProductPDF data={getOrder} />
+          <ProductPDF data={order} />
         </PDFViewer> */}
       </div>
       <div>

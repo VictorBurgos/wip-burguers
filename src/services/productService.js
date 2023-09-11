@@ -18,7 +18,7 @@ export const productService = {
   getAllProducts: async () => {
     const response = await axios.get(`${API_URL}/products`);
     const products = response.data.map(Product);
-    return products;
+    return products.sort((a, b) => a.price - b.price);
   },
   
   createProduct: async (product) => { // CREATE

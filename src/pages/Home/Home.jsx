@@ -6,7 +6,6 @@ import Products from "../Products";
 import Inventory from "../Inventory";
 import ListOrders from "../ListOrders";
 import "./style.css";
-import classnames from "classnames";
 
 const Home = () => {
   return (

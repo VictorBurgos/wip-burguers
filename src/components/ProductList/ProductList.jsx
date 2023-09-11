@@ -18,7 +18,7 @@ const ProductList = (props) => {
     fetchProducts();
   }, []);
 
-  const ProductsCards = products.sort((a, b) => a.price - b.price).map((p) => {
+  const ProductsCards = products.map((p) => {
     const key = p.id;
     const handleStartEditing = () => startEditingMode(p.id);
     return <ProductCard key={key} editingMode={handleStartEditing} product={p} />

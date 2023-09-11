@@ -1,35 +1,25 @@
 import React, { useState, useMemo } from "react";
-const MenuContext = React.createContext();
+const OrdersContext = React.createContext();
 
 // Creo la función prooverá al componente y escuchara en toda la estructura
 export function OrderProvider(props) {
-  const [getOrder, setGetOrder] = useState([]);
-
-  const setReset = () => {
-    setGetOrder([]);
-  };
-
-  const save = (obj) => {
-    if (obj && obj.getOrder)
-      setGetOrder({
-        ...obj.getOrder
-      });
-  };
+  const [order, setOrder] = useState([]);
+  const resetOrder = () => setOrder([]);
+  const saveOrder = (obj) => (obj && obj.order) && setOrder({ ...obj.order });;
 
   const value = useMemo(() => {
     return {
-      save,
-      reset: setReset,
-      getOrder: getOrder,
-      saveOrder: setGetOrder,
+      resetOrder,
+      saveOrder,
+      order,
     };
-  }, [getOrder]);
+  }, [order]);
 
-  return <MenuContext.Provider value={value} {...props} />;
+  return <OrdersContext.Provider value={value} {...props} />;
 }
 
 // Se crea la función que se utilizará en los componentes
 export function useOrder() {
-  const context = React.useContext(MenuContext);
+  const context = React.useContext(OrdersContext);
   return context;
 }
